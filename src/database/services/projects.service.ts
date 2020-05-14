@@ -20,8 +20,12 @@ export class ProjectsService {
     return this.projectModel.find().exec();
   }
 
+  async find(_id: string): Promise<Project> {
+    return this.projectModel.findOne({ _id }).exec();
+  }
+
   async delete(id: string): Promise<boolean> {
-    const deletedCount = (await this.projectModel.deleteOne({ _id: id }))
+    const deletedCount = (await this.projectModel.deleteOne({ _id: id }).exec())
       .deletedCount;
     return deletedCount > 0;
   }

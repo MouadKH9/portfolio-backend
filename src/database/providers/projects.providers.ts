@@ -2,7 +2,7 @@ import { Connection } from 'mongoose';
 import { ProjectSchema } from '../schemas/project.schema';
 import constants from '../constants';
 
-export const proectsProviders = [
+export const projectsProviders = [
   {
     provide: constants.PROJECT_MODEL,
     useFactory: (connection: Connection) =>
