@@ -1,4 +1,7 @@
-import { CreateProjectDTO } from './../interfaces/create_project.dto';
+import {
+  CreateProjectDTO,
+  UpdateProjectDTO,
+} from './../interfaces/project.dto';
 import { Project } from '../interfaces/project';
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
@@ -14,6 +17,13 @@ export class ProjectsService {
   async create(createProjectDto: CreateProjectDTO): Promise<Project> {
     const createdCat = new this.projectModel(createProjectDto);
     return createdCat.save();
+  }
+
+  async update(
+    _id: string,
+    updateProjectDto: UpdateProjectDTO,
+  ): Promise<boolean> {
+    return (await this.projectModel.updateOne({ _id }, updateProjectDto)).ok;
   }
 
   async findAll(): Promise<Project[]> {

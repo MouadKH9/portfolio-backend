@@ -1,7 +1,18 @@
-import { CreateProjectDTO } from './database/interfaces/create_project.dto';
+import {
+  CreateProjectDTO,
+  UpdateProjectDTO,
+} from './database/interfaces/project.dto';
 import { ProjectsService } from './database/services/projects.service';
 import { Project } from './database/interfaces/project';
-import { Controller, Get, Param, Delete, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  Post,
+  Body,
+  Put,
+} from '@nestjs/common';
 
 @Controller('projects')
 export class AppController {
@@ -18,8 +29,17 @@ export class AppController {
     return project;
   }
 
+  @Put(':id')
+  async updateProject(
+    @Param('id') id: string,
+    @Body() updateProjectDTO: UpdateProjectDTO,
+  ) {
+    const ok = await this.projectsService.update(id, updateProjectDTO);
+    return { success: !!ok };
+  }
+
   @Get(':id')
-  async getProject(@Param('id') id): Promise<Project> {
+  async getProject(@Param('id') id: string): Promise<Project> {
     return await this.projectsService.find(id);
   }
 
